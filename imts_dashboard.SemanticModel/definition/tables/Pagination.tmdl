@@ -1,0 +1,35 @@
+table Pagination
+	lineageTag: 9c989e29-ccf3-4393-a69b-2f8fcc3eb205
+
+	measure 'Current Page' =
+			
+			SELECTEDVALUE(
+			    Pagination[Value],
+			    1
+			)
+		formatString: 0
+		lineageTag: 8a00991d-0a0c-4ee9-8a2d-4b6253493b4c
+
+	measure 'Page Size' =
+			
+			5
+		formatString: 0
+		lineageTag: 3bb0f57f-47ed-4e26-a1ec-6aa463c698d2
+
+	column Value
+		formatString: 0
+		lineageTag: 146b0bb7-b044-4cbe-beae-09c70d4c5cbe
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pagination = calculated
+		mode: import
+		source =
+				
+				GENERATESERIES(1, 200, 1)
+
+	annotation PBI_Id = e25d6b4c98ca4a009c027aa0c191e0f8
+

@@ -1,0 +1,84 @@
+relationship 2002aeda-8f00-4fb6-8e68-f1230f0ff74f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteTestHistory.CastDate
+	toColumn: LocalDateTable_9e79b00a-e5d6-4d49-946d-2fb156eaef07.Date
+
+relationship 4720a7ba-5ee5-449b-b87f-f0fef538e33e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteTestHistory.LastAmendDate
+	toColumn: LocalDateTable_7a7765a8-52b9-4901-8e49-cfb4ee90cf09.Date
+
+relationship 9b0ae667-2f08-4e63-87b4-89d5b653a9f0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteTestHistory.ConcreteTestLastUpdatedAt
+	toColumn: LocalDateTable_bcea1b1e-f709-46f3-b5dc-773e12d742a2.Date
+
+relationship 70f4e174-b8d5-4bf9-9928-6ff5af2b1c16
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteSpecimenHistory.CastDate
+	toColumn: LocalDateTable_4a4df2c0-d539-4deb-b5ba-17f8fdccb4e7.Date
+
+relationship d607ed81-fdd7-4fad-8cff-e49cf0b3167a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteSpecimenHistory.ReceivedAt
+	toColumn: LocalDateTable_f6961834-6b08-459a-b0e3-9a5c96767797.Date
+
+relationship 40c3a0e1-c31f-4d82-9071-60ee51ae1193
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteSpecimenHistory.TestedAt
+	toColumn: LocalDateTable_3ac37a74-f352-4e0c-944b-e58560b0478b.Date
+
+relationship f687698d-137e-487f-8dd8-aff08ca68305
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ConcreteSpecimenHistory.SpecimenLastUpdatedAt
+	toColumn: LocalDateTable_f4166122-b1f8-4a44-853d-72773ec17503.Date
+
+relationship AutoDetected_29bcf91d-a68c-405d-827a-b9a476d73125
+	fromColumn: ConcreteSpecimenHistory.ConcreteTestDataId
+	toColumn: ConcreteTestHistory.ConcreteTestDataId
+
+relationship 694dd638-85c1-17c2-c60b-78f2dee20aac
+	fromColumn: CurrentConcreteSpecimenStatus.ConcreteTestDataId
+	toColumn: CurrentConcreteTestStatus.ConcreteTestDataId
+
+relationship aa36f945-085e-ad73-d5c6-1de17ac54884
+	fromColumn: CurrentConcreteTestStatus.TestSubTypeId
+	toColumn: ConcreteTestSubTypes.id
+
+relationship 45356adb-fb1a-d414-09fa-50ac2727eca6
+	fromColumn: CurrentConcreteSpecimenStatus.WasFieldCured
+	toColumn: CuringTypes.CuringTypeId
+
+relationship 30f44949-5924-3312-ac49-8c72097155f4
+	fromColumn: CurrentConcreteTestStatus.ProjectId
+	toColumn: ConcreteDashboardProjects.ProjectId
+
+relationship 15d12daf-27d9-4248-95f9-4d25e3173515
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HistoricalConcreteBenchmark.CastDate
+	toColumn: LocalDateTable_ad7e361d-5a76-4262-9598-5659dfcc6c94.Date
+
+relationship ef97bcf1-d32c-44f3-ba4f-55c2ad445964
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HistoricalConcreteBenchmark.LastAmendDate
+	toColumn: LocalDateTable_abf677c0-51eb-4b77-8458-792f75e0c05b.Date
+
+relationship 284082ae-57d1-4b3f-aa89-9facd9dd2321
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HistoricalConcreteBenchmark.ConcreteTestLastUpdatedAt
+	toColumn: LocalDateTable_d84fba02-fed4-482f-aa17-f0f483f9fb3a.Date
+
+relationship AutoDetected_81e7f687-b02d-4048-8295-62a696ea94c5
+	fromColumn: HistoricalStrengthSummaryPQ.CuringType
+	toColumn: CuringTypes.CuringType
+
+relationship AutoDetected_f2e6d03d-ee74-4605-a67b-00de8aa2527c
+	fromColumn: HistoricalConcreteBenchmark.CuringType
+	toColumn: CuringTypes.CuringType
+
+relationship 55eff9b4-9cc0-4736-bdf0-b94527bbdea8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: CurrentConcreteSpecimenHistoricalBenchmark.SpecimenRowId
+	toColumn: CurrentConcreteSpecimenStatus.SpecimenRowId
+

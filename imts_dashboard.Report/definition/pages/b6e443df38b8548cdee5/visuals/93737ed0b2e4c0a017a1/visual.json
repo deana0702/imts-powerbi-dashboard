@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "93737ed0b2e4c0a017a1",
+  "position": {
+    "x": 601.6,
+    "y": 252.8,
+    "z": 8000,
+    "height": 100,
+    "width": 370,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ConcreteSpecimenHistory"
+                    }
+                  },
+                  "Property": "Matching Tests"
+                }
+              },
+              "queryRef": "ConcreteSpecimenHistory.Matching Tests",
+              "nativeQueryRef": "Matching Tests",
+              "format": "0"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "ConcreteSpecimenHistory"
+                  }
+                },
+                "Property": "Matching Tests"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ConcreteSpecimenHistory.Matching Tests"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

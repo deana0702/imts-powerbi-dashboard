@@ -1,0 +1,98 @@
+table CurrentConcreteSpecimenHistoricalBenchmark
+	lineageTag: 5d66d730-e52a-4b1c-a629-b4ef251a79ac
+
+	column SpecimenRowId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6d6122a6-7682-4de5-98cc-4f4e1108f608
+		summarizeBy: none
+		sourceColumn: SpecimenRowId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestDataId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 423c8622-49cb-470b-8bc6-0f87d082cdbd
+		summarizeBy: count
+		sourceColumn: ConcreteTestDataId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 80af47cf-fef4-4118-94b5-b7bf6be7b080
+		summarizeBy: count
+		sourceColumn: OfficeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 71cf56fa-77af-4877-b35f-008ebba09289
+		summarizeBy: count
+		sourceColumn: ProjectId
+
+		annotation SummarizationSetBy = Automatic
+
+	column BreakAgeDays
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c4c10f5f-d851-42b6-a505-5b773faac11b
+		summarizeBy: sum
+		sourceColumn: BreakAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		dataType: string
+		isNullable: false
+		sourceProviderType: varchar(8)
+		lineageTag: 21d014a8-2901-45f6-affb-befe2809814c
+		summarizeBy: none
+		sourceColumn: CuringType
+
+		annotation SummarizationSetBy = Automatic
+
+	column ComparableCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a96ea799-aadd-43ad-ba19-df5d9b3c3607
+		summarizeBy: sum
+		sourceColumn: ComparableCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column HistoricalAvg_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 4a09a6e5-0a0a-472f-8fa7-d120fbbdaca4
+		summarizeBy: sum
+		sourceColumn: HistoricalAvg_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition CurrentConcreteSpecimenHistoricalBenchmark = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("localhost", "imts-main-master"),
+				    dbo_vw_CurrentConcreteSpecimenHistoricalBenchmark = Source{[Schema="dbo",Item="vw_CurrentConcreteSpecimenHistoricalBenchmark"]}[Data]
+				in
+				    dbo_vw_CurrentConcreteSpecimenHistoricalBenchmark
+

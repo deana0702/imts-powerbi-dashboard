@@ -1,0 +1,559 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "b4ceed40dd1700d81ce7",
+  "position": {
+    "x": 0,
+    "y": 214.12639405204462,
+    "z": 6000,
+    "height": 255.76208178438662,
+    "width": 1020.6691449814127,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "LabNo"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.LabNo",
+              "nativeQueryRef": "LabNo"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "SpecimenLabel"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.SpecimenLabel",
+              "nativeQueryRef": "SpecimenLabel"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "CastDate"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.CastDate",
+              "nativeQueryRef": "CastDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "CuringType"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.CuringType",
+              "nativeQueryRef": "CuringType"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteTestStatus"
+                    }
+                  },
+                  "Property": "EffectiveSlump_in"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteTestStatus.EffectiveSlump_in",
+              "nativeQueryRef": "EffectiveSlump_in"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteTestStatus"
+                    }
+                  },
+                  "Property": "EffectiveAir_percent"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteTestStatus.EffectiveAir_percent",
+              "nativeQueryRef": "EffectiveAir_percent"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteTestStatus"
+                    }
+                  },
+                  "Property": "EffectiveConcreteTemp_F"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteTestStatus.EffectiveConcreteTemp_F",
+              "nativeQueryRef": "EffectiveConcreteTemp_F"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "ScheduledTestDate"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.ScheduledTestDate",
+              "nativeQueryRef": "ScheduledTestDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "TestedAt"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteSpecimenStatus.TestedAt",
+              "nativeQueryRef": "TestedAt"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteTestStatus"
+                    }
+                  },
+                  "Property": "SupplierName"
+                }
+              },
+              "queryRef": "CurrentConcreteTestStatus.SupplierName",
+              "nativeQueryRef": "SupplierName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "SpecimenRowId"
+                }
+              },
+              "queryRef": "CountNonNull(vw_CurrentConcreteSpecimenStatus.SpecimenRowId)",
+              "nativeQueryRef": "SpecimenRowId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "BreakAgeDays"
+                }
+              },
+              "queryRef": "Sum(vw_CurrentConcreteSpecimenStatus.BreakAgeDays)",
+              "nativeQueryRef": "BreakAgeDays"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteTestStatus"
+                    }
+                  },
+                  "Property": "RequiredStrength28_psi"
+                }
+              },
+              "queryRef": "vw_CurrentConcreteTestStatus.RequiredStrength28_psi",
+              "nativeQueryRef": "RequiredStrength28_psi"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenStatus"
+                    }
+                  },
+                  "Property": "ActualCompressiveStrength_psi"
+                }
+              },
+              "queryRef": "Sum(CurrentConcreteSpecimenStatus.ActualCompressiveStrength_psi)",
+              "nativeQueryRef": "ActualCompressiveStrength_psi"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenHistoricalBenchmark"
+                    }
+                  },
+                  "Property": "HistoricalAvg_psi"
+                }
+              },
+              "queryRef": "Sum(CurrentConcreteSpecimenHistoricalBenchmark.HistoricalAvg_psi)",
+              "nativeQueryRef": "HistoricalAvg_psi"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CurrentConcreteSpecimenHistoricalBenchmark"
+                    }
+                  },
+                  "Property": "ComparableCount"
+                }
+              },
+              "queryRef": "Sum(CurrentConcreteSpecimenHistoricalBenchmark.ComparableCount)",
+              "nativeQueryRef": "ComparableCount"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CurrentConcreteSpecimenStatus"
+                  }
+                },
+                "Property": "SpecimenRowId"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Concrete Specimen Status'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e8822c70d5527a5a3b38",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "BreakAgeDays"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9740b93547c21a08c2e3",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "CastDate"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "94adf2c7d0d01086db90",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "CompressiveStrengthRounded_psi"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "3eeba19f010db17a02e0",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "CuringType"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5adb552f1c3e4c74329a",
+        "ordinal": 4,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteTestStatus"
+              }
+            },
+            "Property": "EffectiveAir_percent"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fa169cbf4a10569d0088",
+        "ordinal": 5,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteTestStatus"
+              }
+            },
+            "Property": "EffectiveConcreteTemp_F"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "25fa5aeb9eadc55c1030",
+        "ordinal": 6,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteTestStatus"
+              }
+            },
+            "Property": "EffectiveSlump_in"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0591f1493e2e114e4d2d",
+        "ordinal": 7,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "LabNo"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "3ea83a1e3a7b36369660",
+        "ordinal": 8,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteTestStatus"
+              }
+            },
+            "Property": "RequiredStrength28_psi"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0a81500d5005aaa67d72",
+        "ordinal": 9,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "ScheduledTestDate"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "783fe94ebc00be25e20e",
+        "ordinal": 10,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "SpecimenLabel"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "48a6f607ee8dd720e7d8",
+        "ordinal": 11,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "SpecimenRowId"
+          }
+        },
+        "type": "Advanced",
+        "objects": {
+          "general": [
+            {
+              "properties": {}
+            }
+          ]
+        }
+      },
+      {
+        "name": "d739b974d570015e4b39",
+        "ordinal": 12,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "TestedAt"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4e11874a980e3ec01364",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenHistoricalBenchmark"
+              }
+            },
+            "Property": "HistoricalAvg_psi"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "19e6a749e50e6c9097a3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenHistoricalBenchmark"
+              }
+            },
+            "Property": "ComparableCount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d0731e9655dc5460be19",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteSpecimenStatus"
+              }
+            },
+            "Property": "ActualCompressiveStrength_psi"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eb810c9e08a72ad93978",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "CurrentConcreteTestStatus"
+              }
+            },
+            "Property": "SupplierName"
+          }
+        },
+        "type": "Categorical"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

@@ -1,0 +1,41 @@
+table CuringTypes
+	lineageTag: 29bb9fa5-8482-4a71-9834-dcf988df9ad8
+
+	column CuringTypeId
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 50e68635-9b58-4066-a60f-df2de9a0ca5b
+		summarizeBy: none
+		sourceColumn: CuringTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		dataType: string
+		lineageTag: 7327f92c-36c1-41f5-aa07-b64f11ad03a1
+		summarizeBy: none
+		sourceColumn: CuringType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CuringTypes = m
+		mode: import
+		source =
+				let
+				    Source = #table(
+				        type table [
+				            CuringTypeId = logical,
+				            CuringType = text
+				        ],
+				        {
+				            {false, "Standard"},
+				            {true,  "Field"}
+				        }
+				    )
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

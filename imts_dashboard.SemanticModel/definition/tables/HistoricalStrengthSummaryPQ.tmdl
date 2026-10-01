@@ -1,0 +1,61 @@
+table HistoricalStrengthSummaryPQ
+	lineageTag: 24dd36c8-588d-4341-9316-69620592c566
+
+	column ConcreteTestDataId
+		dataType: int64
+		formatString: 0
+		lineageTag: ce2e6b3a-3b4c-44f2-b90c-8b00f59dc703
+		summarizeBy: count
+		sourceColumn: ConcreteTestDataId
+
+		annotation SummarizationSetBy = Automatic
+
+	column BreakAgeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 97402e70-8422-4dd8-a301-e39e561894cd
+		summarizeBy: sum
+		sourceColumn: BreakAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		dataType: string
+		lineageTag: 8ece662e-12e2-4d09-bde7-af41a8e19a5f
+		summarizeBy: none
+		sourceColumn: CuringType
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestAverageStrength_psi
+		dataType: double
+		lineageTag: b92acb18-4f31-4eb7-aba9-7cfeb4b113d6
+		summarizeBy: sum
+		sourceColumn: TestAverageStrength_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SpecimensWithResults
+		dataType: int64
+		formatString: 0
+		lineageTag: 6062aee2-8bae-4883-9e26-18a961fca2d2
+		summarizeBy: sum
+		sourceColumn: SpecimensWithResults
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HistoricalStrengthSummaryPQ = m
+		mode: import
+		source =
+				let
+				    Source = ConcreteSpecimenHistory,
+				    #"Grouped Rows" = Table.Group(Source, {"ConcreteTestDataId", "BreakAgeDays", "CuringType"}, {{"TestAverageStrength_psi", each List.Average([ActualCompressiveStrength_psi]), type nullable number}, {"SpecimensWithResults", each Table.RowCount(_), Int64.Type}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,77 @@
+table HistoricalStrengthSummary
+	lineageTag: f6e69d84-2df8-427c-bf10-592ec99a4670
+
+	column ConcreteTestDataId
+		formatString: 0
+		lineageTag: 3e35dbe6-3cf5-459d-95dd-dc0118f8b714
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: ConcreteSpecimenHistory[ConcreteTestDataId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column BreakAgeDays
+		formatString: 0
+		lineageTag: 856de6ec-3e80-4cfe-a7b0-9e9e35dd0893
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: ConcreteSpecimenHistory[BreakAgeDays]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		lineageTag: 78a57f9f-e738-441d-b9af-c95acec81b48
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: ConcreteSpecimenHistory[CuringType]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestAverageStrength_psi
+		lineageTag: 4f432785-d4a1-42aa-bf04-4e1d8ea18f57
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TestAverageStrength_psi]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SpecimensWithResults
+		formatString: 0
+		lineageTag: 8817377e-20b3-4b4c-a379-e793bf9f8d91
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [SpecimensWithResults]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HistoricalStrengthSummary = calculated
+		mode: import
+		source =
+				
+				VAR SummaryRows =
+				    SUMMARIZE (
+				        'ConcreteSpecimenHistory',
+				        'ConcreteSpecimenHistory'[ConcreteTestDataId],
+				        'ConcreteSpecimenHistory'[BreakAgeDays],
+				        'ConcreteSpecimenHistory'[CuringType],
+				
+				        "TestAverageStrength_psi",
+				            AVERAGE (
+				                'ConcreteSpecimenHistory'[ActualCompressiveStrength_psi]
+				            ),
+				
+				        "SpecimensWithResults",
+				            COUNT (
+				                'ConcreteSpecimenHistory'[ActualCompressiveStrength_psi]
+				            )
+				    )
+				RETURN
+				    FILTER (
+				        SummaryRows,
+				        [SpecimensWithResults] > 0
+				    )
+
+	annotation PBI_Id = 476fd7bc5e7a4b36a24194fe472067d4
+

@@ -1,0 +1,683 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset Filters",
+  "name": "cef023b420c032b75a75",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "68011f052b27d9194bce",
+      "f48130f2e006a37ed9ae",
+      "23b6679d5a2d9e742b89",
+      "6138f5347eee27c8c74c",
+      "023b9ed6682e43048b43"
+    ],
+    "suppressActiveSection": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "c638f5c034a09955b9ad",
+    "sections": {
+      "c638f5c034a09955b9ad": {
+        "visualContainers": {
+          "023b9ed6682e43048b43": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "21721d28461e4dc5800e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CuringTypes"
+                        }
+                      },
+                      "Property": "CuringType"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CuringTypes"
+                        }
+                      },
+                      "Property": "CuringType"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "23b6679d5a2d9e742b89": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "57e5b7bd0a3e108a8ea4",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ConcreteDashboardProjects"
+                        }
+                      },
+                      "Property": "ProjectNo"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ConcreteDashboardProjects"
+                        }
+                      },
+                      "Property": "ProjectNo"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "6138f5347eee27c8c74c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2b8fd2f790040ec00867",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ConcreteTestSubTypes"
+                        }
+                      },
+                      "Property": "displayName"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ConcreteTestSubTypes"
+                        }
+                      },
+                      "Property": "displayName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "7214ea1c1cc264a4a8d0": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "b4ceed40dd1700d81ce7": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "0591f1493e2e114e4d2d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "LabNo"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "783fe94ebc00be25e20e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "SpecimenLabel"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9740b93547c21a08c2e3",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "CastDate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3eeba19f010db17a02e0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "CuringType"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0a81500d5005aaa67d72",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "ScheduledTestDate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d739b974d570015e4b39",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "TestedAt"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e8822c70d5527a5a3b38",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "BreakAgeDays"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "94adf2c7d0d01086db90",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "CompressiveStrengthRounded_psi"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "48a6f607ee8dd720e7d8",
+                  "type": "TopN",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "subquery",
+                        "Expression": {
+                          "Subquery": {
+                            "Query": {
+                              "Version": 2,
+                              "From": [
+                                {
+                                  "Name": "v",
+                                  "Entity": "CurrentConcreteSpecimenStatus",
+                                  "Type": 0
+                                }
+                              ],
+                              "Select": [
+                                {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "v"
+                                      }
+                                    },
+                                    "Property": "SpecimenRowId"
+                                  },
+                                  "Name": "field"
+                                }
+                              ],
+                              "OrderBy": [
+                                {
+                                  "Direction": 2,
+                                  "Expression": {
+                                    "Aggregation": {
+                                      "Expression": {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "v"
+                                            }
+                                          },
+                                          "Property": "SpecimenRowId"
+                                        }
+                                      },
+                                      "Function": 5
+                                    }
+                                  }
+                                }
+                              ],
+                              "Top": 5
+                            }
+                          }
+                        },
+                        "Type": 2
+                      },
+                      {
+                        "Name": "v",
+                        "Entity": "CurrentConcreteSpecimenStatus",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "v"
+                                    }
+                                  },
+                                  "Property": "SpecimenRowId"
+                                }
+                              }
+                            ],
+                            "Table": {
+                              "SourceRef": {
+                                "Source": "subquery"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "SpecimenRowId"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "25fa5aeb9eadc55c1030",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteTestStatus"
+                        }
+                      },
+                      "Property": "EffectiveSlump_in"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5adb552f1c3e4c74329a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteTestStatus"
+                        }
+                      },
+                      "Property": "EffectiveAir_percent"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fa169cbf4a10569d0088",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteTestStatus"
+                        }
+                      },
+                      "Property": "EffectiveConcreteTemp_F"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3ea83a1e3a7b36369660",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteTestStatus"
+                        }
+                      },
+                      "Property": "RequiredStrength28_psi"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "248f55c0c27c7e1e1770",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "Historical Avg (psi)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "bb2da3e61c055422a5bd",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "Comparable Tests"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0a386ae50dab06abe0d0",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "SpecimenRowId"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2fdf4c6eb9ada5900659",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "c",
+                        "Entity": "ConcreteDashboardProjects",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 0,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "c"
+                                  }
+                                },
+                                "Property": "Show Specimen Rows"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ConcreteDashboardProjects"
+                        }
+                      },
+                      "Property": "Show Specimen Rows"
+                    }
+                  },
+                  "howCreated": 1
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CurrentConcreteSpecimenStatus"
+                        }
+                      },
+                      "Property": "SpecimenRowId"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "db5e3f0a6d906e3a1275": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "f48130f2e006a37ed9ae": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "44e6b7718c2497461e70",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Offices"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Offices"
+                        }
+                      },
+                      "Property": "name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "68011f052b27d9194bce": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

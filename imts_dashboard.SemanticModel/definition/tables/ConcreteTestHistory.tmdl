@@ -1,0 +1,770 @@
+table ConcreteTestHistory
+	lineageTag: 4098c0cf-789c-43f0-8102-f739826a55d7
+
+	column ConcreteTestDataId
+		dataType: int64
+		formatString: 0
+		lineageTag: 897660f7-9c82-4768-88bc-05cc32a6f894
+		summarizeBy: none
+		sourceColumn: ConcreteTestDataId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestId
+		dataType: int64
+		formatString: 0
+		lineageTag: 37c50c88-750a-4ed2-9a98-d74274d30266
+		summarizeBy: count
+		sourceColumn: TestId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleId
+		dataType: int64
+		formatString: 0
+		lineageTag: 57275156-de41-48b4-bdf0-e9c883a5946a
+		summarizeBy: count
+		sourceColumn: SampleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LabNo
+		dataType: string
+		lineageTag: 4224cea3-6ef6-4fda-b9e0-ff35a8d8e529
+		summarizeBy: none
+		sourceColumn: LabNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cd95d8f-5ade-4a66-974d-4b2dc54e89d5
+		summarizeBy: count
+		sourceColumn: OfficeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeName
+		dataType: string
+		lineageTag: c7e9e447-29ea-4621-9589-8f9e2cc4e80f
+		summarizeBy: none
+		sourceColumn: OfficeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectId
+		dataType: int64
+		formatString: 0
+		lineageTag: 26c9bd65-7a3e-45fa-bcfa-4c9775512d1f
+		summarizeBy: count
+		sourceColumn: ProjectId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectNo
+		dataType: string
+		lineageTag: c07c5178-a78c-487c-a487-156ef8a64a3e
+		summarizeBy: none
+		sourceColumn: ProjectNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectName
+		dataType: string
+		lineageTag: d59071d8-5e36-4e83-89fd-a414793e7d5f
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestSubTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: f16236b7-c978-46a9-8b78-d777cd3f2b00
+		summarizeBy: count
+		sourceColumn: TestSubTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestUnitSystem
+		dataType: int64
+		formatString: 0
+		lineageTag: 5463418c-5d85-4dbc-9661-600941e949a6
+		summarizeBy: sum
+		sourceColumn: ConcreteTestUnitSystem
+
+		annotation SummarizationSetBy = Automatic
+
+	column CastDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 88b0dad7-8e00-44a0-88a8-db8e9c5de16e
+		summarizeBy: none
+		sourceColumn: CastDate
+
+		variation Variation
+			isDefault
+			relationship: 2002aeda-8f00-4fb6-8e68-f1230f0ff74f
+			defaultHierarchy: LocalDateTable_9e79b00a-e5d6-4d49-946d-2fb156eaef07.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PlacementType
+		dataType: string
+		lineageTag: ba9528ec-0b33-4b47-8415-a273696d5180
+		summarizeBy: none
+		sourceColumn: PlacementType
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlacementLocation
+		dataType: string
+		lineageTag: 4c2ccdd8-d8a1-4d69-8972-63212a056027
+		summarizeBy: none
+		sourceColumn: PlacementLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampledFrom
+		dataType: string
+		lineageTag: 3842b325-97d8-4073-a4f0-2a5c6617d663
+		summarizeBy: none
+		sourceColumn: SampledFrom
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierId
+		dataType: int64
+		formatString: 0
+		lineageTag: e19be458-2fa2-47e6-b769-e759ac3741ab
+		summarizeBy: count
+		sourceColumn: SupplierId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierName
+		dataType: string
+		lineageTag: da7532fd-8f28-462b-9ae7-9d8770ea13ec
+		summarizeBy: none
+		sourceColumn: SupplierName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlantNumber
+		dataType: string
+		lineageTag: 54f0c2e6-898b-4a06-8faf-b39d9b4eb9bf
+		summarizeBy: none
+		sourceColumn: PlantNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MixNumber
+		dataType: string
+		lineageTag: a02d8b92-f990-4c5b-946b-8f86e6c4e488
+		summarizeBy: none
+		sourceColumn: MixNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column TruckNumber
+		dataType: string
+		lineageTag: 72a8a1ba-a11f-44a0-b087-1d6b924de73c
+		summarizeBy: none
+		sourceColumn: TruckNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column TicketNumber
+		dataType: string
+		lineageTag: 06f32be0-f824-4841-8662-10913299c5b4
+		summarizeBy: none
+		sourceColumn: TicketNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleWorkflowStateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 6cfc2461-3f0d-4128-840d-473dd9ecb76d
+		summarizeBy: count
+		sourceColumn: SampleWorkflowStateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestWorkflowStateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 73a7f8b8-30be-4032-9e89-a7ec5aceeb7e
+		summarizeBy: count
+		sourceColumn: TestWorkflowStateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnapprovedReportCount
+		dataType: int64
+		formatString: 0
+		lineageTag: c2f3620d-1920-4e5a-aa8e-cbe7b6408c74
+		summarizeBy: sum
+		sourceColumn: UnapprovedReportCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmendmentNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a2c0e6e8-1727-4a4d-a9d0-3b903bdd6e7d
+		summarizeBy: sum
+		sourceColumn: AmendmentNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastAmendDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 033f9960-b7d2-4064-bc68-58401e381615
+		summarizeBy: none
+		sourceColumn: LastAmendDate
+
+		variation Variation
+			isDefault
+			relationship: 4720a7ba-5ee5-449b-b87f-f0fef538e33e
+			defaultHierarchy: LocalDateTable_7a7765a8-52b9-4901-8e49-cfb4ee90cf09.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiresAmendment
+		dataType: int64
+		formatString: 0
+		lineageTag: aced035c-59fe-4040-b5ed-5ee51d7b8648
+		summarizeBy: sum
+		sourceColumn: RequiresAmendment
+
+		annotation SummarizationSetBy = Automatic
+
+	column AllBreaksCompleted
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cd7399a-96de-4a6e-a98d-e93759e9810f
+		summarizeBy: sum
+		sourceColumn: AllBreaksCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column EffectiveSlump_in
+		dataType: double
+		lineageTag: f4264d89-8717-4571-9c90-11290d200e30
+		summarizeBy: sum
+		sourceColumn: EffectiveSlump_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SlumpMeasurementSource
+		dataType: string
+		lineageTag: 8d4cdfbe-3dfe-4b5b-bca2-247a57968b9d
+		summarizeBy: none
+		sourceColumn: SlumpMeasurementSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column SlumpSpecMin_in
+		dataType: double
+		lineageTag: 6d6bd10d-abc4-443d-9363-28f5734a9054
+		summarizeBy: sum
+		sourceColumn: SlumpSpecMin_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SlumpSpecMax_in
+		dataType: double
+		lineageTag: 0cc921ad-8bbf-40b1-9da9-9b1b8733d2c9
+		summarizeBy: sum
+		sourceColumn: SlumpSpecMax_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EffectiveSpread_in
+		dataType: double
+		lineageTag: 9eea33e9-f97e-4498-9cba-7ec946e4edc5
+		summarizeBy: sum
+		sourceColumn: EffectiveSpread_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SpreadMeasurementSource
+		dataType: string
+		lineageTag: 128bd918-f08f-4f9b-9a62-5513ff44760b
+		summarizeBy: none
+		sourceColumn: SpreadMeasurementSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpreadSpecMin_in
+		dataType: double
+		lineageTag: d86309e1-cfd9-4513-88c6-daaf350acda6
+		summarizeBy: sum
+		sourceColumn: SpreadSpecMin_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SpreadSpecMax_in
+		dataType: double
+		lineageTag: 14b2da95-87ed-4bcd-a457-8884eecaa448
+		summarizeBy: sum
+		sourceColumn: SpreadSpecMax_in
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EffectiveAir_percent
+		dataType: double
+		lineageTag: 05938863-fac4-445a-bb14-720f493351a6
+		summarizeBy: sum
+		sourceColumn: EffectiveAir_percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AirMeasurementSource
+		dataType: string
+		lineageTag: ad614abf-9d6b-4b6a-9aa5-36362d3ebf4d
+		summarizeBy: none
+		sourceColumn: AirMeasurementSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column AirSpecMin_percent
+		dataType: double
+		lineageTag: c682bdde-8de5-453a-8574-63c8ecb73f86
+		summarizeBy: sum
+		sourceColumn: AirSpecMin_percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AirSpecMax_percent
+		dataType: double
+		lineageTag: a43be75b-22ac-4323-a3af-b4a9fa17191c
+		summarizeBy: sum
+		sourceColumn: AirSpecMax_percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EffectiveUnitWeight_lb_ft3
+		dataType: double
+		lineageTag: d890e17d-228a-4b8c-ab8d-158878f833db
+		summarizeBy: sum
+		sourceColumn: EffectiveUnitWeight_lb_ft3
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitWeightMeasurementSource
+		dataType: string
+		lineageTag: 37fa8957-c8ad-4283-848b-bb2c7aa4b208
+		summarizeBy: none
+		sourceColumn: UnitWeightMeasurementSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitWeightSpecMin_lb_ft3
+		dataType: double
+		lineageTag: f810db16-37e7-4e4e-b5b4-fe65614078ef
+		summarizeBy: sum
+		sourceColumn: UnitWeightSpecMin_lb_ft3
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitWeightSpecMax_lb_ft3
+		dataType: double
+		lineageTag: 1e88c1db-2084-4b34-b64a-799fd507fa9f
+		summarizeBy: sum
+		sourceColumn: UnitWeightSpecMax_lb_ft3
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EffectiveConcreteTemp_F
+		dataType: double
+		lineageTag: 6c262be4-0abf-4786-9164-500823ca39e9
+		summarizeBy: sum
+		sourceColumn: EffectiveConcreteTemp_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ConcreteTempMeasurementSource
+		dataType: string
+		lineageTag: 65fcc72f-d3b4-4117-ae09-7b3f16bbac75
+		summarizeBy: none
+		sourceColumn: ConcreteTempMeasurementSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTempSpecMin_F
+		dataType: double
+		lineageTag: d04744aa-ac86-4871-bb9e-a61fa9816f0e
+		summarizeBy: sum
+		sourceColumn: ConcreteTempSpecMin_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ConcreteTempSpecMax_F
+		dataType: double
+		lineageTag: 2527110d-ef2f-4124-ac64-767e09a6996e
+		summarizeBy: sum
+		sourceColumn: ConcreteTempSpecMax_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AmbientTemp_F
+		dataType: double
+		lineageTag: f15bd98d-0248-4131-84c3-e69255671350
+		summarizeBy: sum
+		sourceColumn: AmbientTemp_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InitialCuringHighTemp_F
+		dataType: double
+		lineageTag: 31ae54c1-556f-4869-bbc3-f87e209ebdb5
+		summarizeBy: sum
+		sourceColumn: InitialCuringHighTemp_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InitialCuringLowTemp_F
+		dataType: double
+		lineageTag: fb854c2d-7959-45bf-a6ff-30bf37cdeb3b
+		summarizeBy: sum
+		sourceColumn: InitialCuringLowTemp_F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InitialCuringCondition
+		dataType: string
+		lineageTag: 895e682e-bd42-4adf-9417-8e92077ee969
+		summarizeBy: none
+		sourceColumn: InitialCuringCondition
+
+		annotation SummarizationSetBy = Automatic
+
+	column BatchTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 990223db-9e4c-4e3e-8cfd-99940b9030ea
+		summarizeBy: none
+		sourceColumn: BatchTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column SampleTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: d079c5b9-c600-4351-994f-3d189927f253
+		summarizeBy: none
+		sourceColumn: SampleTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column CastTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: ef675a30-67d8-458b-9ef5-313ddae1883a
+		summarizeBy: none
+		sourceColumn: CastTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column WaterAddedRaw
+		dataType: double
+		lineageTag: bf1ed3ce-6b1f-426a-b989-4290fc4f54e4
+		summarizeBy: sum
+		sourceColumn: WaterAddedRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LoadBatchVolumeRaw
+		dataType: double
+		lineageTag: f26e77c3-631b-44fe-bd90-b5e99caa0287
+		summarizeBy: sum
+		sourceColumn: LoadBatchVolumeRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LoadVolumeUnits
+		dataType: string
+		lineageTag: 62c80a76-6028-4f8b-9fbc-10bb0e8c6588
+		summarizeBy: none
+		sourceColumn: LoadVolumeUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestSpecifiedStrengthRaw
+		dataType: double
+		lineageTag: aa7032f1-ee33-4709-94f0-95316dd835f7
+		summarizeBy: sum
+		sourceColumn: TestSpecifiedStrengthRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TestSpecifiedStrengthDaysRaw
+		dataType: int64
+		formatString: 0
+		lineageTag: 93ea477f-e983-4685-a746-0ab65f1108f6
+		summarizeBy: sum
+		sourceColumn: TestSpecifiedStrengthDaysRaw
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestSpecifiedStrengthTypeIdRaw
+		dataType: int64
+		formatString: 0
+		lineageTag: a382817f-15df-4fcb-948e-4cc56ace641c
+		summarizeBy: sum
+		sourceColumn: TestSpecifiedStrengthTypeIdRaw
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrength28_psi
+		dataType: double
+		lineageTag: 01c65190-7d1c-4fb3-b121-a85e972c5c6a
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RequiredStrength28RowCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 067056cb-d159-444b-baee-9e8f37945498
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28RowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrength28DistinctValueCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b35411d-408a-47d2-b7a6-2702c75521f5
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28DistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrength28_psi
+		dataType: double
+		lineageTag: 38ac8f12-7e02-4a25-a07b-cf17cc81b843
+		summarizeBy: sum
+		sourceColumn: DesignStrength28_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DesignStrength28RowCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a836c1c-080e-4f8c-9d02-aa370be69b43
+		summarizeBy: sum
+		sourceColumn: DesignStrength28RowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrength28DistinctValueCount
+		dataType: int64
+		formatString: 0
+		lineageTag: b3fa40fa-f3e2-4824-8a49-310c16a55427
+		summarizeBy: sum
+		sourceColumn: DesignStrength28DistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestLastUpdatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8500fc25-e9d1-4a04-b465-fa52f262170f
+		summarizeBy: none
+		sourceColumn: ConcreteTestLastUpdatedAt
+
+		variation Variation
+			isDefault
+			relationship: 9b0ae667-2f08-4e63-87b4-89d5b653a9f0
+			defaultHierarchy: LocalDateTable_bcea1b1e-f709-46f3-b5dc-773e12d742a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ConcreteTestHistory = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\deoks\source\repos\imts-PowerBI\data\ConcreteTestHistory.csv"),[Delimiter=",", Columns=68, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = let
+				    Source = #"Promoted Headers",
+				
+				    // Convert blank text and literal NULL to actual null.
+				    // Preserve recorded zero values.
+				    NormalizeMissing = Table.TransformColumns(
+				        Source,
+				        List.Transform(
+				            Table.ColumnNames(Source),
+				            (columnName) => {
+				                columnName,
+				                (value) =>
+				                    if value is text then
+				                        if Text.Trim(value) = ""
+				                            or Text.Upper(Text.Trim(value)) = "NULL"
+				                        then null
+				                        else value
+				                    else value
+				            }
+				        )
+				    ),
+				
+				    SetTypes = Table.TransformColumnTypes(
+				        NormalizeMissing,
+				        {
+				            {"ConcreteTestDataId", Int64.Type},
+				            {"TestId", Int64.Type},
+				            {"SampleId", Int64.Type},
+				            {"LabNo", type text},
+				
+				            {"OfficeId", Int64.Type},
+				            {"OfficeName", type text},
+				            {"ProjectId", Int64.Type},
+				            {"ProjectNo", type text},
+				            {"ProjectName", type text},
+				
+				            {"TestSubTypeId", Int64.Type},
+				            {"ConcreteTestUnitSystem", Int64.Type},
+				            {"CastDate", type date},
+				
+				            {"PlacementType", type text},
+				            {"PlacementLocation", type text},
+				            {"SampledFrom", type text},
+				
+				            {"SupplierId", Int64.Type},
+				            {"SupplierName", type text},
+				            {"PlantNumber", type text},
+				            {"MixNumber", type text},
+				            {"TruckNumber", type text},
+				            {"TicketNumber", type text},
+				
+				            {"SampleWorkflowStateId", Int64.Type},
+				            {"TestWorkflowStateId", Int64.Type},
+				            {"UnapprovedReportCount", Int64.Type},
+				            {"AmendmentNumber", Int64.Type},
+				            {"LastAmendDate", type datetime},
+				            {"RequiresAmendment", Int64.Type},
+				            {"AllBreaksCompleted", Int64.Type},
+				
+				            {"EffectiveSlump_in", type number},
+				            {"SlumpMeasurementSource", type text},
+				            {"SlumpSpecMin_in", type number},
+				            {"SlumpSpecMax_in", type number},
+				
+				            {"EffectiveSpread_in", type number},
+				            {"SpreadMeasurementSource", type text},
+				            {"SpreadSpecMin_in", type number},
+				            {"SpreadSpecMax_in", type number},
+				
+				            {"EffectiveAir_percent", type number},
+				            {"AirMeasurementSource", type text},
+				            {"AirSpecMin_percent", type number},
+				            {"AirSpecMax_percent", type number},
+				
+				            {"EffectiveUnitWeight_lb_ft3", type number},
+				            {"UnitWeightMeasurementSource", type text},
+				            {"UnitWeightSpecMin_lb_ft3", type number},
+				            {"UnitWeightSpecMax_lb_ft3", type number},
+				
+				            {"EffectiveConcreteTemp_F", type number},
+				            {"ConcreteTempMeasurementSource", type text},
+				            {"ConcreteTempSpecMin_F", type number},
+				            {"ConcreteTempSpecMax_F", type number},
+				
+				            {"AmbientTemp_F", type number},
+				            {"InitialCuringHighTemp_F", type number},
+				            {"InitialCuringLowTemp_F", type number},
+				            {"InitialCuringCondition", type text},
+				
+				            {"BatchTime", type time},
+				            {"SampleTime", type time},
+				            {"CastTime", type time},
+				
+				            {"WaterAddedRaw", type number},
+				            {"LoadBatchVolumeRaw", type number},
+				            {"LoadVolumeUnits", type text},
+				
+				            {"TestSpecifiedStrengthRaw", type number},
+				            {"TestSpecifiedStrengthDaysRaw", Int64.Type},
+				            {"TestSpecifiedStrengthTypeIdRaw", Int64.Type},
+				
+				            {"RequiredStrength28_psi", type number},
+				            {"RequiredStrength28RowCount", Int64.Type},
+				            {"RequiredStrength28DistinctValueCount", Int64.Type},
+				
+				            {"DesignStrength28_psi", type number},
+				            {"DesignStrength28RowCount", Int64.Type},
+				            {"DesignStrength28DistinctValueCount", Int64.Type},
+				
+				            {"ConcreteTestLastUpdatedAt", type datetime}
+				        },
+				        "en-US"
+				    )
+				in
+				    SetTypes
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

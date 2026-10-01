@@ -1,0 +1,81 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "425f750c1d0011692550",
+  "position": {
+    "x": 1401.6,
+    "y": 254.4,
+    "z": 10000,
+    "height": 100.46511627906978,
+    "width": 370,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ConcreteSpecimenHistory"
+                    }
+                  },
+                  "Property": "Average Test Strength (psi)"
+                }
+              },
+              "queryRef": "ConcreteSpecimenHistory.Average Test Strength (psi)",
+              "nativeQueryRef": "Average Test Strength (psi)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "ConcreteSpecimenHistory"
+                  }
+                },
+                "Property": "Average Test Strength (psi)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ConcreteSpecimenHistory.Average Test Strength (psi)"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

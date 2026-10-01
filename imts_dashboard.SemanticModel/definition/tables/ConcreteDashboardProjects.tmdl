@@ -1,0 +1,57 @@
+table ConcreteDashboardProjects
+	lineageTag: d93eb179-1671-4759-90a0-883234c1b8ea
+
+	column ProjectId
+		dataType: int64
+		formatString: 0
+		lineageTag: ff256cf5-906b-4de4-9cb2-a8040e7a064d
+		summarizeBy: none
+		sourceColumn: ProjectId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectNo
+		dataType: string
+		lineageTag: f8ef85ed-98a4-4dad-8fa0-52508f2d6bf6
+		summarizeBy: none
+		sourceColumn: ProjectNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectName
+		dataType: string
+		lineageTag: a1fb8453-1d1e-4ff5-bcbf-4e0c55719c83
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeId
+		dataType: int64
+		formatString: 0
+		lineageTag: f6176117-a55f-4c3b-b6ff-d44cc9f26a23
+		summarizeBy: none
+		sourceColumn: OfficeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeName
+		dataType: string
+		lineageTag: ddbe9b9b-795e-47ad-bd25-abd4444111e7
+		summarizeBy: none
+		sourceColumn: OfficeName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ConcreteDashboardProjects = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\deoks\source\repos\imts-PowerBI\data\ConcreteDashboardProjects.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProjectId", Int64.Type}, {"ProjectNo", type text}, {"ProjectName", type text}, {"OfficeId", Int64.Type}, {"OfficeName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

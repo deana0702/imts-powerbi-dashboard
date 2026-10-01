@@ -1,0 +1,67 @@
+table ConcreteTestSubTypes
+	lineageTag: ec790d21-a3c8-4896-bca0-c7d4a575a4d5
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: ff075207-cd0f-4159-a46b-e84e233693a5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column areaType
+		dataType: string
+		lineageTag: c0efa7df-f968-4c9f-9e43-c7f0b6d50f2b
+		summarizeBy: none
+		sourceColumn: areaType
+
+		annotation SummarizationSetBy = Automatic
+
+	column resTestProcedureId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f99578f-4148-4d88-b294-3d93fa821718
+		summarizeBy: none
+		sourceColumn: resTestProcedureId
+
+		annotation SummarizationSetBy = Automatic
+
+	column resTestStandardId
+		dataType: int64
+		formatString: 0
+		lineageTag: 282b538c-1fd0-463e-a94d-18d349082718
+		summarizeBy: none
+		sourceColumn: resTestStandardId
+
+		annotation SummarizationSetBy = Automatic
+
+	column displayName
+		dataType: string
+		lineageTag: af609314-8c24-44a9-a4c4-cd90f6534025
+		summarizeBy: none
+		sourceColumn: displayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column availableToOfficeRegions
+		dataType: int64
+		formatString: 0
+		lineageTag: 580bd625-8364-4824-bff3-05cbbfeff901
+		summarizeBy: none
+		sourceColumn: availableToOfficeRegions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ConcreteTestSubTypes = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\deoks\source\repos\imts-PowerBI\data\ConcreteTestSubTypes.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"areaType", type text}, {"resTestProcedureId", Int64.Type}, {"resTestStandardId", Int64.Type}, {"displayName", type text}, {"availableToOfficeRegions", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

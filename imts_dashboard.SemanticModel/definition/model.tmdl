@@ -1,0 +1,46 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+/// Errors in queries that were loaded on 9/22/2026 12:27:43 PM.
+queryGroup 'Query Errors - 9/22/2026 12:27:43 PM'
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["ConcreteTestHistory","ConcreteSpecimenHistory","CurrentConcreteSpecimenStatus","CurrentConcreteTestStatus","ConcreteTestSubTypes","CuringTypes","Errors in CuringTypes","ConcreteDashboardProjects","HistoricalConcreteBenchmark","HistoricalStrengthSummaryPQ","CurrentConcreteSpecimenHistoricalBenchmark"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table ConcreteTestHistory
+ref table DateTableTemplate_d8f07159-0d77-49b0-b2fa-2a9fd5c1ca89
+ref table LocalDateTable_9e79b00a-e5d6-4d49-946d-2fb156eaef07
+ref table LocalDateTable_7a7765a8-52b9-4901-8e49-cfb4ee90cf09
+ref table LocalDateTable_bcea1b1e-f709-46f3-b5dc-773e12d742a2
+ref table ConcreteSpecimenHistory
+ref table LocalDateTable_4a4df2c0-d539-4deb-b5ba-17f8fdccb4e7
+ref table LocalDateTable_f6961834-6b08-459a-b0e3-9a5c96767797
+ref table LocalDateTable_3ac37a74-f352-4e0c-944b-e58560b0478b
+ref table LocalDateTable_f4166122-b1f8-4a44-853d-72773ec17503
+ref table CurrentConcreteSpecimenStatus
+ref table CurrentConcreteTestStatus
+ref table HistoricalStrengthSummary
+ref table ConcreteTestSubTypes
+ref table CuringTypes
+ref table ConcreteDashboardProjects
+ref table Pagination
+ref table HistoricalConcreteBenchmark
+ref table LocalDateTable_ad7e361d-5a76-4262-9598-5659dfcc6c94
+ref table LocalDateTable_abf677c0-51eb-4b77-8458-792f75e0c05b
+ref table LocalDateTable_d84fba02-fed4-482f-aa17-f0f483f9fb3a
+ref table HistoricalStrengthSummaryPQ
+ref table CurrentConcreteSpecimenHistoricalBenchmark
+
+ref cultureInfo en-US
+

@@ -1,0 +1,1328 @@
+table CurrentConcreteSpecimenStatus
+	lineageTag: 65b126e6-b511-4df3-bcbc-251682a3a2ec
+
+	measure 'Historical Avg (psi)' =
+			
+			// Prototype tolerances: change the same constants in BOTH measures.
+			VAR SlumpTolerance = 0.5   // inches
+			VAR AirTolerance = 0.5     // percentage points
+			VAR TemperatureTolerance = 5.0  // degrees F
+			VAR CurrentTestId =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[ConcreteTestDataId])
+			VAR CurrentSubtype =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[TestSubTypeId])
+			VAR CurrentUnit =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[ConcreteTestUnitSystem])
+			VAR CurrentAge =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[BreakAgeDays])
+			VAR CurrentCuring =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[CuringType])
+			VAR ValidRow =
+			    ISINSCOPE('CurrentConcreteSpecimenStatus'[SpecimenRowId])
+			        && HASONEVALUE('CurrentConcreteSpecimenStatus'[SpecimenRowId])
+			        && NOT ISBLANK(CurrentTestId)
+			        && NOT ISBLANK(CurrentSubtype)
+			        && CurrentUnit == 0
+			        && CurrentAge > 0
+			        && CurrentCuring IN { "Standard", "Field" }
+			RETURN
+			IF(
+			    NOT ValidRow,
+			    BLANK(),
+			    // Read ONLY this current test's measurements; historical results below
+			    // come exclusively from the two History tables.
+			    VAR CurrentSlump =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveSlump_in]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR CurrentAir =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveAir_percent]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR CurrentTemperature =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveConcreteTemp_F]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR HasMeasurements =
+			        NOT ISBLANK(CurrentSlump)
+			            && NOT ISBLANK(CurrentAir)
+			            && NOT ISBLANK(CurrentTemperature)
+			    RETURN
+			    IF(
+			        NOT HasMeasurements,
+			        BLANK(),
+			        VAR MatchingTests =
+			            FILTER(
+			                ALL('ConcreteTestHistory'),
+			                'ConcreteTestHistory'[TestSubTypeId] == CurrentSubtype
+			                    && 'ConcreteTestHistory'[ConcreteTestUnitSystem] == CurrentUnit
+			                    && 'ConcreteTestHistory'[ConcreteTestDataId] <> CurrentTestId
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveSlump_in])
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveAir_percent])
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveConcreteTemp_F])
+			                    && 'ConcreteTestHistory'[EffectiveSlump_in] >= CurrentSlump - SlumpTolerance
+			                    && 'ConcreteTestHistory'[EffectiveSlump_in] <= CurrentSlump + SlumpTolerance
+			                    && 'ConcreteTestHistory'[EffectiveAir_percent] >= CurrentAir - AirTolerance
+			                    && 'ConcreteTestHistory'[EffectiveAir_percent] <= CurrentAir + AirTolerance
+			                    && 'ConcreteTestHistory'[EffectiveConcreteTemp_F] >= CurrentTemperature - TemperatureTolerance
+			                    && 'ConcreteTestHistory'[EffectiveConcreteTemp_F] <= CurrentTemperature + TemperatureTolerance
+			            )
+			        VAR MatchingTestIds =
+			            SELECTCOLUMNS(
+			                MatchingTests,
+			                "MatchedId", 'ConcreteTestHistory'[ConcreteTestDataId]
+			            )
+			        // Three matching keys: test ID + BreakAgeDays + CuringType.
+			                VAR MatchingSummary =
+			                    CALCULATETABLE (
+			                        'HistoricalStrengthSummary',
+			                        REMOVEFILTERS ( 'ConcreteTestHistory' ),
+			                        REMOVEFILTERS ( 'HistoricalStrengthSummary' ),
+			                        TREATAS (
+			                            MatchingTestIds,
+			                            'HistoricalStrengthSummary'[ConcreteTestDataId]
+			                        ),
+			                        TREATAS (
+			                            { CurrentAge },
+			                            'HistoricalStrengthSummary'[BreakAgeDays]
+			                        ),
+			                        TREATAS (
+			                            { CurrentCuring },
+			                            'HistoricalStrengthSummary'[CuringType]
+			                        )
+			                    )
+			                RETURN
+			                    AVERAGEX (
+			                        MatchingSummary,
+			                        'HistoricalStrengthSummary'[TestAverageStrength_psi]
+			                    )
+			            )
+			        )
+		lineageTag: 6dfd1655-1ad9-443e-89c0-0a4c6131b4b1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Comparable Tests' =
+			
+			// Prototype tolerances: change the same constants in BOTH measures.
+			VAR SlumpTolerance = 0.5   // inches
+			VAR AirTolerance = 0.5     // percentage points
+			VAR TemperatureTolerance = 5.0  // degrees F
+			VAR CurrentTestId =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[ConcreteTestDataId])
+			VAR CurrentSubtype =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[TestSubTypeId])
+			VAR CurrentUnit =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[ConcreteTestUnitSystem])
+			VAR CurrentAge =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[BreakAgeDays])
+			VAR CurrentCuring =
+			    SELECTEDVALUE('CurrentConcreteSpecimenStatus'[CuringType])
+			VAR ValidRow =
+			    ISINSCOPE('CurrentConcreteSpecimenStatus'[SpecimenRowId])
+			        && HASONEVALUE('CurrentConcreteSpecimenStatus'[SpecimenRowId])
+			        && NOT ISBLANK(CurrentTestId)
+			        && NOT ISBLANK(CurrentSubtype)
+			        && CurrentUnit == 0
+			        && CurrentAge > 0
+			        && CurrentCuring IN { "Standard", "Field" }
+			RETURN
+			IF(
+			    NOT ValidRow,
+			    BLANK(),
+			    // Read ONLY this current test's measurements; historical results below
+			    // come exclusively from the two History tables.
+			    VAR CurrentSlump =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveSlump_in]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR CurrentAir =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveAir_percent]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR CurrentTemperature =
+			        CALCULATE(
+			            SELECTEDVALUE('CurrentConcreteTestStatus'[EffectiveConcreteTemp_F]),
+			            KEEPFILTERS(
+			                TREATAS({ CurrentTestId }, 'CurrentConcreteTestStatus'[ConcreteTestDataId])
+			            )
+			        )
+			    VAR HasMeasurements =
+			        NOT ISBLANK(CurrentSlump)
+			            && NOT ISBLANK(CurrentAir)
+			            && NOT ISBLANK(CurrentTemperature)
+			    RETURN
+			    IF(
+			        NOT HasMeasurements,
+			        BLANK(),
+			        VAR MatchingTests =
+			            FILTER(
+			                ALL('ConcreteTestHistory'),
+			                'ConcreteTestHistory'[TestSubTypeId] == CurrentSubtype
+			                    && 'ConcreteTestHistory'[ConcreteTestUnitSystem] == CurrentUnit
+			                    && 'ConcreteTestHistory'[ConcreteTestDataId] <> CurrentTestId
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveSlump_in])
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveAir_percent])
+			                    && NOT ISBLANK('ConcreteTestHistory'[EffectiveConcreteTemp_F])
+			                    && 'ConcreteTestHistory'[EffectiveSlump_in] >= CurrentSlump - SlumpTolerance
+			                    && 'ConcreteTestHistory'[EffectiveSlump_in] <= CurrentSlump + SlumpTolerance
+			                    && 'ConcreteTestHistory'[EffectiveAir_percent] >= CurrentAir - AirTolerance
+			                    && 'ConcreteTestHistory'[EffectiveAir_percent] <= CurrentAir + AirTolerance
+			                    && 'ConcreteTestHistory'[EffectiveConcreteTemp_F] >= CurrentTemperature - TemperatureTolerance
+			                    && 'ConcreteTestHistory'[EffectiveConcreteTemp_F] <= CurrentTemperature + TemperatureTolerance
+			            )
+			        VAR MatchingTestIds =
+			            SELECTCOLUMNS(
+			                MatchingTests,
+			                "MatchedId", 'ConcreteTestHistory'[ConcreteTestDataId]
+			            )
+			        // Three matching keys: test ID + BreakAgeDays + CuringType.
+			            VAR MatchingSummary =
+			            CALCULATETABLE (
+			                'HistoricalStrengthSummary',
+			                REMOVEFILTERS ( 'ConcreteTestHistory' ),
+			                REMOVEFILTERS ( 'HistoricalStrengthSummary' ),
+			                TREATAS (
+			                    MatchingTestIds,
+			                    'HistoricalStrengthSummary'[ConcreteTestDataId]
+			                ),
+			                TREATAS (
+			                    { CurrentAge },
+			                    'HistoricalStrengthSummary'[BreakAgeDays]
+			                ),
+			                TREATAS (
+			                    { CurrentCuring },
+			                    'HistoricalStrengthSummary'[CuringType]
+			                )
+			            )
+			        RETURN
+			            COALESCE ( COUNTROWS ( MatchingSummary ), 0 )
+			    )
+			)
+		formatString: 0
+		lineageTag: 2861bee4-3d18-4fd1-b244-429e1129eb91
+
+	measure 'Specimen Row Rank' =
+			
+			RANKX(
+			    ALLSELECTED(
+			        'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			    ),
+			    CALCULATE(
+			        MIN(
+			            'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			        )
+			    ),
+			    ,
+			    ASC,
+			    DENSE
+			)
+		formatString: 0
+		lineageTag: 10708ca7-a262-49a1-ad35-976376489ca7
+
+	measure 'Show Specimen On Page' =
+			
+			VAR CurrentPage =
+			    [Current Page]
+			
+			VAR PageSize =
+			    [Page Size]
+			
+			VAR StartRow =
+			    ((CurrentPage - 1) * PageSize) + 1
+			
+			VAR EndRow =
+			    CurrentPage * PageSize
+			
+			VAR RowNumber =
+			    [Specimen Row Rank]
+			
+			RETURN
+			    IF(
+			        RowNumber >= StartRow
+			            && RowNumber <= EndRow,
+			        1,
+			        0
+			    )
+		formatString: 0
+		lineageTag: 16ce0f40-bab5-4310-92f6-9e05cf3be343
+
+	measure 'Total Specimens' =
+			
+			DISTINCTCOUNT(
+			    'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			)
+		formatString: 0
+		lineageTag: 9b2809b3-51a3-4027-bbe3-309638e8f9b6
+
+	measure 'Specimen Page Status' =
+			
+			VAR CurrentPage =
+			    [Current Page]
+			
+			VAR PageSize =
+			    [Page Size]
+			
+			VAR TotalRows =
+			    [Total Specimens]
+			
+			VAR StartRow =
+			    IF(
+			        TotalRows = 0,
+			        0,
+			        ((CurrentPage - 1) * PageSize) + 1
+			    )
+			
+			VAR EndRow =
+			    MIN(
+			        CurrentPage * PageSize,
+			        TotalRows
+			    )
+			
+			RETURN
+			    IF(
+			        TotalRows = 0,
+			        "0 / 0",
+			        FORMAT(StartRow, "#,0")
+			            & "–"
+			            & FORMAT(EndRow, "#,0")
+			            & " / "
+			            & FORMAT(TotalRows, "#,0")
+			    )
+		lineageTag: 7f22e71b-cb7f-44fc-95df-9867a724fabf
+
+	measure 'Historical Average - Paged' =
+			
+			IF(
+			    [Show Specimen On Page] = 1,
+			    [Historical Avg (psi)],
+			    BLANK()
+			)
+		lineageTag: 7c51f699-5fd1-4a6c-ae13-60228c3c9780
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Comparable Count - Paged' =
+			
+			IF(
+			    [Show Specimen On Page] = 1,
+			    [Comparable Tests],
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 4ba173a8-ad21-4326-b302-fcaaf0d252dd
+
+	measure 'Comparable Tests - New' =
+			
+			VAR SlumpTolerance = 0.5
+			VAR AirTolerance = 0.5
+			VAR TemperatureTolerance = 5.0
+			
+			VAR CurrentTestId =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[ConcreteTestDataId]
+			    )
+			
+			VAR CurrentSubtype =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[TestSubTypeId]
+			    )
+			
+			VAR CurrentUnit =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[ConcreteTestUnitSystem]
+			    )
+			
+			VAR CurrentAge =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[BreakAgeDays]
+			    )
+			
+			VAR CurrentCuring =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[CuringType]
+			    )
+			
+			VAR CurrentRequiredStrength =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[RequiredStrength28_psi]
+			    )
+			
+			VAR ValidRow =
+			    ISINSCOPE(
+			        'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			    )
+			        && HASONEVALUE(
+			            'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			        )
+			        && NOT ISBLANK(CurrentTestId)
+			        && NOT ISBLANK(CurrentSubtype)
+			        && CurrentUnit = 0
+			        && CurrentAge > 0
+			        && CurrentCuring IN { "Standard", "Field" }
+			        && NOT ISBLANK(CurrentRequiredStrength)
+			
+			RETURN
+			IF(
+			    NOT ValidRow,
+			    BLANK(),
+			
+			    VAR CurrentSlump =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveSlump_in]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR CurrentAir =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveAir_percent]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR CurrentTemperature =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveConcreteTemp_F]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR HasMeasurements =
+			        NOT ISBLANK(CurrentSlump)
+			            && NOT ISBLANK(CurrentAir)
+			            && NOT ISBLANK(CurrentTemperature)
+			
+			    RETURN
+			        IF(
+			            NOT HasMeasurements,
+			            BLANK(),
+			
+			            VAR MatchingRows =
+			                FILTER(
+			                    ALL('HistoricalConcreteBenchmark'),
+			
+			                    'HistoricalConcreteBenchmark'[TestSubTypeId]
+			                        = CurrentSubtype
+			
+			                        && 'HistoricalConcreteBenchmark'[ConcreteTestUnitSystem]
+			                        = CurrentUnit
+			
+			                        /* Required strength must match */
+			                        && 'HistoricalConcreteBenchmark'[RequiredStrength28_psi]
+			                        = CurrentRequiredStrength
+			
+			                        /* Same specimen age */
+			                        && 'HistoricalConcreteBenchmark'[BreakAgeDays]
+			                        = CurrentAge
+			
+			                        /* Same curing type */
+			                        && 'HistoricalConcreteBenchmark'[CuringType]
+			                        = CurrentCuring
+			
+			                        /* Exclude current test */
+			                        && 'HistoricalConcreteBenchmark'[ConcreteTestDataId]
+			                        <> CurrentTestId
+			
+			                        /* Slump +/- 0.5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveSlump_in]
+			                        >= CurrentSlump - SlumpTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveSlump_in]
+			                        <= CurrentSlump + SlumpTolerance
+			
+			                        /* Air +/- 0.5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveAir_percent]
+			                        >= CurrentAir - AirTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveAir_percent]
+			                        <= CurrentAir + AirTolerance
+			
+			                        /* Temperature +/- 5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveConcreteTemp_F]
+			                        >= CurrentTemperature - TemperatureTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveConcreteTemp_F]
+			                        <= CurrentTemperature + TemperatureTolerance
+			                )
+			
+			            RETURN
+			                COUNTROWS(MatchingRows)
+			        )
+			)
+		lineageTag: 8941f299-c12f-4875-bae4-51bb572ae560
+
+	measure 'Historical Avg (psi) - New' =
+			
+			VAR SlumpTolerance = 0.5
+			VAR AirTolerance = 0.5
+			VAR TemperatureTolerance = 5.0
+			
+			VAR CurrentTestId =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[ConcreteTestDataId]
+			    )
+			
+			VAR CurrentSubtype =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[TestSubTypeId]
+			    )
+			
+			VAR CurrentUnit =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[ConcreteTestUnitSystem]
+			    )
+			
+			VAR CurrentAge =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[BreakAgeDays]
+			    )
+			
+			VAR CurrentCuring =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[CuringType]
+			    )
+			
+			VAR CurrentRequiredStrength =
+			    SELECTEDVALUE(
+			        'CurrentConcreteSpecimenStatus'[RequiredStrength28_psi]
+			    )
+			
+			VAR ValidRow =
+			    ISINSCOPE(
+			        'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			    )
+			        && HASONEVALUE(
+			            'CurrentConcreteSpecimenStatus'[SpecimenRowId]
+			        )
+			        && NOT ISBLANK(CurrentTestId)
+			        && NOT ISBLANK(CurrentSubtype)
+			        && CurrentUnit = 0
+			        && CurrentAge > 0
+			        && CurrentCuring IN { "Standard", "Field" }
+			        && NOT ISBLANK(CurrentRequiredStrength)
+			
+			RETURN
+			IF(
+			    NOT ValidRow,
+			    BLANK(),
+			
+			    VAR CurrentSlump =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveSlump_in]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR CurrentAir =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveAir_percent]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR CurrentTemperature =
+			        CALCULATE(
+			            SELECTEDVALUE(
+			                'CurrentConcreteTestStatus'[EffectiveConcreteTemp_F]
+			            ),
+			            TREATAS(
+			                { CurrentTestId },
+			                'CurrentConcreteTestStatus'[ConcreteTestDataId]
+			            )
+			        )
+			
+			    VAR HasMeasurements =
+			        NOT ISBLANK(CurrentSlump)
+			            && NOT ISBLANK(CurrentAir)
+			            && NOT ISBLANK(CurrentTemperature)
+			
+			    RETURN
+			        IF(
+			            NOT HasMeasurements,
+			            BLANK(),
+			
+			            VAR MatchingRows =
+			                FILTER(
+			                    ALL('HistoricalConcreteBenchmark'),
+			
+			                    'HistoricalConcreteBenchmark'[TestSubTypeId]
+			                        = CurrentSubtype
+			
+			                        && 'HistoricalConcreteBenchmark'[ConcreteTestUnitSystem]
+			                        = CurrentUnit
+			
+			                        /* Required strength must match */
+			                        && 'HistoricalConcreteBenchmark'[RequiredStrength28_psi]
+			                        = CurrentRequiredStrength
+			
+			                        /* Same specimen age */
+			                        && 'HistoricalConcreteBenchmark'[BreakAgeDays]
+			                        = CurrentAge
+			
+			                        /* Same curing type */
+			                        && 'HistoricalConcreteBenchmark'[CuringType]
+			                        = CurrentCuring
+			
+			                        /* Exclude current test */
+			                        && 'HistoricalConcreteBenchmark'[ConcreteTestDataId]
+			                        <> CurrentTestId
+			
+			                        /* Slump +/- 0.5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveSlump_in]
+			                        >= CurrentSlump - SlumpTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveSlump_in]
+			                        <= CurrentSlump + SlumpTolerance
+			
+			                        /* Air +/- 0.5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveAir_percent]
+			                        >= CurrentAir - AirTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveAir_percent]
+			                        <= CurrentAir + AirTolerance
+			
+			                        /* Temperature +/- 5 */
+			                        && 'HistoricalConcreteBenchmark'[EffectiveConcreteTemp_F]
+			                        >= CurrentTemperature - TemperatureTolerance
+			
+			                        && 'HistoricalConcreteBenchmark'[EffectiveConcreteTemp_F]
+			                        <= CurrentTemperature + TemperatureTolerance
+			                )
+			
+			            RETURN
+			                AVERAGEX(
+			                    MatchingRows,
+			                    'HistoricalConcreteBenchmark'[TestAverageStrength_psi]
+			                )
+			        )
+			)
+		lineageTag: 5c36310a-9e8a-441e-a788-6e0292f9f56e
+
+	measure 'Upcoming Breaks' =
+			
+			CALCULATE(
+			    COUNTROWS('CurrentConcreteSpecimenStatus'),
+			
+			    FILTER(
+			        'CurrentConcreteSpecimenStatus',
+			
+			        NOT ISBLANK(
+			            'CurrentConcreteSpecimenStatus'[ScheduledTestDate]
+			        )
+			
+			        && 'CurrentConcreteSpecimenStatus'[ScheduledTestDate] >= TODAY()
+			
+			        && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 0
+			    )
+			)
+		formatString: 0
+		lineageTag: 3cd1613b-c94a-499b-bcf7-11be67517a76
+
+	measure 'Due Next 7 Days' =
+			
+			CALCULATE(
+			    COUNTROWS('CurrentConcreteSpecimenStatus'),
+			
+			    FILTER(
+			        'CurrentConcreteSpecimenStatus',
+			
+			        NOT ISBLANK(
+			            'CurrentConcreteSpecimenStatus'[ScheduledTestDate]
+			        )
+			
+			        && 'CurrentConcreteSpecimenStatus'[ScheduledTestDate] >= TODAY()
+			
+			        && 'CurrentConcreteSpecimenStatus'[ScheduledTestDate] <= TODAY() + 7
+			
+			        && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 0
+			    )
+			)
+		formatString: 0
+		lineageTag: 40af56fa-9b0c-4445-8d86-480d753727ac
+
+	measure Overdue =
+			
+			CALCULATE(
+			    COUNTROWS('CurrentConcreteSpecimenStatus'),
+			
+			    FILTER(
+			        'CurrentConcreteSpecimenStatus',
+			
+			        NOT ISBLANK(
+			            'CurrentConcreteSpecimenStatus'[ScheduledTestDate]
+			        )
+			
+			        && 'CurrentConcreteSpecimenStatus'[ScheduledTestDate] < TODAY()
+			
+			        && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 0
+			    )
+			)
+		formatString: 0
+		lineageTag: cdd1d7f7-f73b-468f-b367-f1a33f3ccad3
+
+	measure '28-Day Complete' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        'CurrentConcreteSpecimenStatus'[ConcreteTestDataId]
+			    ),
+			
+			    FILTER(
+			        'CurrentConcreteSpecimenStatus',
+			
+			        'CurrentConcreteSpecimenStatus'[BreakAgeDays] = 28
+			
+			        && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 1
+			    )
+			)
+		formatString: 0
+		lineageTag: abcf0d7a-545a-4a25-9d49-0abff19c4531
+
+	measure 'Requires Review' =
+			
+			CALCULATE(
+			    COUNTROWS('CurrentConcreteSpecimenStatus'),
+			
+			    FILTER(
+			        'CurrentConcreteSpecimenStatus',
+			
+			        /* 1. Overdue, result missing */
+			        (
+			            NOT ISBLANK(
+			                'CurrentConcreteSpecimenStatus'[ScheduledTestDate]
+			            )
+			            && 'CurrentConcreteSpecimenStatus'[ScheduledTestDate] < TODAY()
+			            && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 0
+			        )
+			
+			        ||
+			
+			        /* 2. Tested date recorded, but strength missing */
+			        (
+			            NOT ISBLANK(
+			                'CurrentConcreteSpecimenStatus'[TestedAt]
+			            )
+			            && 'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 0
+			        )
+			
+			        ||
+			
+			        /* 3. Strength is below required strength */
+			        (
+			            'CurrentConcreteSpecimenStatus'[HasCompressiveStrengthResult] = 1
+			
+			            && NOT ISBLANK(
+			                'CurrentConcreteSpecimenStatus'[RequiredStrengthAtAge_psi]
+			            )
+			
+			            && 'CurrentConcreteSpecimenStatus'[ActualCompressiveStrength_psi]
+			                <
+			                'CurrentConcreteSpecimenStatus'[RequiredStrengthAtAge_psi]
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 2c6853d5-8228-4f54-ac18-092af38a8a1c
+
+	column OfficeId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 23cfa6e3-5df5-4602-acac-d559e7bb27f5
+		summarizeBy: count
+		sourceColumn: OfficeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OfficeName
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: a40d53cb-a4f3-47cb-89ef-130af9d143ac
+		summarizeBy: none
+		sourceColumn: OfficeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: baf54295-ae08-40ba-b97d-6f442b42d638
+		summarizeBy: count
+		sourceColumn: ProjectId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectNo
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(50)
+		lineageTag: 5cc091f5-b24f-44d2-a197-2e18649a864a
+		summarizeBy: none
+		sourceColumn: ProjectNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectName
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: b1703215-efd9-4533-8c6d-9f4f2c0b83a6
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecimenRowId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a41d45e7-1b65-47cb-acc6-6d2f7230b9ed
+		summarizeBy: none
+		sourceColumn: SpecimenRowId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecimenLabel
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 4b95a64b-494d-4999-b4c7-9e11a665e009
+		summarizeBy: none
+		sourceColumn: SpecimenLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestDataId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: adcafc70-a8f3-4ea1-9cc0-ecbdf6fcba30
+		summarizeBy: none
+		sourceColumn: ConcreteTestDataId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 640f06dd-c610-4cbf-965e-3a5c4d9b918a
+		summarizeBy: count
+		sourceColumn: TestId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7128c133-d7f5-4328-bd96-e5b25eac4a48
+		summarizeBy: count
+		sourceColumn: SampleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LabNo
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(50)
+		lineageTag: 696fca15-30f8-4b3a-ae67-393197a24957
+		summarizeBy: none
+		sourceColumn: LabNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestSubTypeId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: b15a610b-5b36-492a-a3ec-339ebdda72d4
+		summarizeBy: count
+		sourceColumn: TestSubTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestUnitSystem
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: fec8335b-f42f-46f4-99fd-98e471ddc2ac
+		summarizeBy: sum
+		sourceColumn: ConcreteTestUnitSystem
+
+		annotation SummarizationSetBy = Automatic
+
+	column CastDateRaw
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 9190132d-6650-44a6-93d6-e199c79f9508
+		summarizeBy: none
+		sourceColumn: CastDateRaw
+
+		annotation SummarizationSetBy = Automatic
+
+	column CastDate
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 1deb36cc-1a37-4af6-8ff1-7914ac16159a
+		summarizeBy: none
+		sourceColumn: CastDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BreakAgeDays
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: b623fd78-4385-4ebb-b17b-45b342523dda
+		summarizeBy: sum
+		sourceColumn: BreakAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsHoldByDays
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c5a2c94f-d629-43dc-81a4-d19ca7c856e5
+		summarizeBy: sum
+		sourceColumn: IsHoldByDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeScheduleCategory
+		dataType: string
+		isNullable: false
+		sourceProviderType: varchar(33)
+		lineageTag: 123b293a-8df5-444d-bb1f-8d7a72e37d13
+		summarizeBy: none
+		sourceColumn: AgeScheduleCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 4a4b7a1f-f312-41cf-b3b6-f818f36f78ce
+		summarizeBy: none
+		sourceColumn: ReceivedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestedAt
+		dataType: dateTime
+		formatString: m/d/yyyy
+		sourceProviderType: datetime2
+		lineageTag: 57e95dc8-770c-4bc2-977a-f1c1a435b78d
+		summarizeBy: none
+		sourceColumn: TestedAt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column HasRecordedTestedDate
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: dd098573-1516-4da1-9e3e-5b7e78966d96
+		summarizeBy: sum
+		sourceColumn: HasRecordedTestedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column WasFieldCured
+		dataType: boolean
+		isNullable: false
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: b8dd5d1a-605d-4a13-87a0-7dcd7c722fff
+		summarizeBy: none
+		sourceColumn: WasFieldCured
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		dataType: string
+		isNullable: false
+		sourceProviderType: varchar(8)
+		lineageTag: 90b5b054-fe29-4fb0-a693-eed192e33e98
+		summarizeBy: none
+		sourceColumn: CuringType
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringLocation
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: bcbd052c-7a28-42af-81a0-e7783cfd1150
+		summarizeBy: none
+		sourceColumn: CuringLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestLoadRaw
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 2f78c703-06a7-4dc5-85d9-1a0d581b41b0
+		summarizeBy: sum
+		sourceColumn: TestLoadRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WidthOrDiameterRaw
+		dataType: double
+		isNullable: false
+		sourceProviderType: float
+		lineageTag: 4e58b8b0-1f79-4918-ad39-b8f77c0282a9
+		summarizeBy: sum
+		sourceColumn: WidthOrDiameterRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HeightOrLengthRaw
+		dataType: double
+		isNullable: false
+		sourceProviderType: float
+		lineageTag: 81c76357-a0d8-4ca7-af39-27d9e097276c
+		summarizeBy: sum
+		sourceColumn: HeightOrLengthRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CalculatedAreaRaw
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 5f59739f-b4ca-4bfe-a445-f0bfd5453fc3
+		summarizeBy: sum
+		sourceColumn: CalculatedAreaRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompressiveStrengthRounded_psi
+		dataType: double
+		formatString: 0
+		sourceProviderType: float
+		lineageTag: ea7af15b-32fe-4220-ade9-2aa74a9fe9f7
+		summarizeBy: sum
+		sourceColumn: CompressiveStrengthRounded_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column CompressiveStrengthUnrounded_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 92ee529e-ad97-4f10-b771-497e2515c430
+		summarizeBy: sum
+		sourceColumn: CompressiveStrengthUnrounded_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActualCompressiveStrength_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 36569b57-8d22-4d65-aea2-3bbd9069b5e7
+		summarizeBy: sum
+		sourceColumn: ActualCompressiveStrength_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HasCompressiveStrengthResult
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 36a3399f-7ea2-4ece-8f18-bf463ebc0e24
+		summarizeBy: sum
+		sourceColumn: HasCompressiveStrengthResult
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasRecordedZeroStrength
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 94533432-85a1-40e7-8539-dc30beabd0d8
+		summarizeBy: sum
+		sourceColumn: HasRecordedZeroStrength
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResultEntryStatus
+		dataType: string
+		isNullable: false
+		sourceProviderType: varchar(38)
+		lineageTag: af5fc003-608d-4777-a219-085710a1c85f
+		summarizeBy: none
+		sourceColumn: ResultEntryStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrengthAtAge_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: c3fbb7cd-1afc-4417-9378-a76e00a0f912
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAge_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RequiredStrengthAtAgeRowCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 77b4d015-7f01-4ff9-bd40-8e668ca4dd57
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAgeRowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrengthAtAgeDistinctValueCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7f6b0878-9e47-45b4-8053-0b839443c1f3
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAgeDistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrengthAtAge_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 25c77831-3534-4330-b290-db754eb7964f
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAge_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DesignStrengthAtAgeRowCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 67f64e40-b02f-440e-a0e4-61ab36ca50f6
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAgeRowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrengthAtAgeDistinctValueCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e76d3c92-44a1-42d1-8670-55b12a3a17a5
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAgeDistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrength28_psi
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 50f31219-d853-4332-a9cd-04adf2b435f3
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RequiredStrength28RowCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: abdad8eb-df4b-4275-9b0a-6e648f2508a7
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28RowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrength28DistinctValueCount
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7138c583-1a31-4f71-9694-d8b09279ee9d
+		summarizeBy: sum
+		sourceColumn: RequiredStrength28DistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column FractureTypeId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 393a3ad8-76d3-4786-ab22-51aae6112f94
+		summarizeBy: count
+		sourceColumn: FractureTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CapTypeId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 8ef4308c-1699-4134-bad6-b26acf8aec24
+		summarizeBy: count
+		sourceColumn: CapTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TechnicianId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 3b777d3d-a431-4ab7-abe5-87b15a2c54d7
+		summarizeBy: count
+		sourceColumn: TechnicianId
+
+		annotation SummarizationSetBy = Automatic
+
+	column EquipmentName
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 74ba8cfe-01d5-447a-9bcd-4ba7c58069cb
+		summarizeBy: none
+		sourceColumn: EquipmentName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleWorkflowStateId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 5f24206e-02b8-4104-a0c9-a2628bd888ce
+		summarizeBy: count
+		sourceColumn: SampleWorkflowStateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestWorkflowStateId
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c26f72f0-1d3e-47c1-9e1c-b5f715cb2494
+		summarizeBy: count
+		sourceColumn: TestWorkflowStateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmendmentNumber
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 40450d5d-86da-45ed-8799-19f28def3561
+		summarizeBy: sum
+		sourceColumn: AmendmentNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecimenLastUpdatedAt
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 96c4859c-fce6-4bea-a83d-cf07151ebb45
+		summarizeBy: none
+		sourceColumn: SpecimenLastUpdatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column ScheduledTestDate
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 4718f3d2-d80a-4ec8-8939-fdd7048ab39b
+		summarizeBy: none
+		sourceColumn: ScheduledTestDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition CurrentConcreteSpecimenStatus = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("localhost", "imts-main-master"),
+				    dbo_vw_CurrentConcreteSpecimenStatus = Source{[Schema="dbo",Item="vw_CurrentConcreteSpecimenStatus"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_vw_CurrentConcreteSpecimenStatus, each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

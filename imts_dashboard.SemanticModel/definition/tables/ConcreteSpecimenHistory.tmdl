@@ -1,0 +1,493 @@
+table ConcreteSpecimenHistory
+	lineageTag: 879b4f51-47fd-41c0-84fe-19b35544314f
+
+	measure 'Average Strength (psi)' =
+			
+			AVERAGE(
+			    'ConcreteSpecimenHistory'[ActualCompressiveStrength_psi]
+			)
+		lineageTag: 6e7addf7-0f5b-47cf-98cc-63257e34dab3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Specimens with Results' =
+			
+			COALESCE(
+			    COUNT(
+			        ConcreteSpecimenHistory[ActualCompressiveStrength_psi]
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: c3437298-0476-434c-b2fa-d6dff4ca9ecb
+
+	measure 'Matching Tests' =
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT(
+			            ConcreteSpecimenHistory[ConcreteTestDataId]
+			        ),
+			        KEEPFILTERS(
+			            NOT ISBLANK(
+			                ConcreteSpecimenHistory[ActualCompressiveStrength_psi]
+			            )
+			        )
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: cf76ff34-665d-4710-ae5a-302aa5f72d13
+
+	measure 'Average Test Strength (psi)' =
+			
+			AVERAGEX(
+			    VALUES(
+			        ConcreteSpecimenHistory[ConcreteTestDataId]
+			    ),
+			    CALCULATE(
+			        AVERAGE(
+			            ConcreteSpecimenHistory[ActualCompressiveStrength_psi]
+			        )
+			    )
+			)
+		lineageTag: c2d03184-23f9-4c95-b355-6f5b28b60ddd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SpecimenRowId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8cb082f3-3b68-4244-be4b-fa1d85b1e165
+		summarizeBy: count
+		sourceColumn: SpecimenRowId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecimenLabel
+		dataType: string
+		lineageTag: 7d36950b-2e0f-4e3c-b1b3-e93c7000325e
+		summarizeBy: none
+		sourceColumn: SpecimenLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestDataId
+		dataType: int64
+		formatString: 0
+		lineageTag: f301bd2e-cd5f-4139-8573-a345f71cf136
+		summarizeBy: none
+		sourceColumn: ConcreteTestDataId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d9cc86f-76d2-4dcd-acbc-a95fb03c2eab
+		summarizeBy: count
+		sourceColumn: TestId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleId
+		dataType: int64
+		formatString: 0
+		lineageTag: 97831a90-0273-465a-afbc-beec19819da7
+		summarizeBy: count
+		sourceColumn: SampleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LabNo
+		dataType: string
+		lineageTag: e41e5a82-d4e8-4de0-ad0a-2ac7426574f6
+		summarizeBy: none
+		sourceColumn: LabNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestSubTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 90cd7639-78af-4494-9584-2e7580826e09
+		summarizeBy: count
+		sourceColumn: TestSubTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcreteTestUnitSystem
+		dataType: int64
+		formatString: 0
+		lineageTag: 7031520a-00ff-42c1-8b9a-8be74453cbb1
+		summarizeBy: sum
+		sourceColumn: ConcreteTestUnitSystem
+
+		annotation SummarizationSetBy = Automatic
+
+	column CastDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7b957f18-9f22-476e-9039-9c1270fba21e
+		summarizeBy: none
+		sourceColumn: CastDate
+
+		variation Variation
+			isDefault
+			relationship: 70f4e174-b8d5-4bf9-9928-6ff5af2b1c16
+			defaultHierarchy: LocalDateTable_4a4df2c0-d539-4deb-b5ba-17f8fdccb4e7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BreakAgeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 54f780c3-2482-40f0-98a9-d2d82e389255
+		summarizeBy: sum
+		sourceColumn: BreakAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d086bdab-d665-4c83-ad60-9cc9de9d7ad9
+		summarizeBy: none
+		sourceColumn: ReceivedAt
+
+		variation Variation
+			isDefault
+			relationship: d607ed81-fdd7-4fad-8cff-e49cf0b3167a
+			defaultHierarchy: LocalDateTable_f6961834-6b08-459a-b0e3-9a5c96767797.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d17bf75c-c061-429d-9fe5-bd11e30926cf
+		summarizeBy: none
+		sourceColumn: TestedAt
+
+		variation Variation
+			isDefault
+			relationship: 40c3a0e1-c31f-4d82-9071-60ee51ae1193
+			defaultHierarchy: LocalDateTable_3ac37a74-f352-4e0c-944b-e58560b0478b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column WasFieldCured
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b9cfae0-409f-43ee-983e-7399916c8352
+		summarizeBy: sum
+		sourceColumn: WasFieldCured
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringType
+		dataType: string
+		lineageTag: 28364c0b-15a3-483b-8785-de800e562687
+		summarizeBy: none
+		sourceColumn: CuringType
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuringLocation
+		dataType: string
+		lineageTag: 49529375-14bb-452d-952e-b0987188fe8c
+		summarizeBy: none
+		sourceColumn: CuringLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestLoadRaw
+		dataType: double
+		lineageTag: 32a36b08-d7a1-4231-b1bf-b3a8d926164f
+		summarizeBy: sum
+		sourceColumn: TestLoadRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WidthOrDiameterRaw
+		dataType: double
+		lineageTag: cab5d90a-17cf-460e-863a-5ab5e4f9ba1e
+		summarizeBy: sum
+		sourceColumn: WidthOrDiameterRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HeightOrLengthRaw
+		dataType: double
+		lineageTag: 156f6433-87a4-48c0-a381-2f89dc598cce
+		summarizeBy: sum
+		sourceColumn: HeightOrLengthRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CalculatedAreaRaw
+		dataType: double
+		lineageTag: dcc10bdb-13f9-47be-bbc0-08ba6513efe4
+		summarizeBy: sum
+		sourceColumn: CalculatedAreaRaw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompressiveStrengthRounded_psi
+		dataType: double
+		lineageTag: f8db248e-6eec-4ed4-a1d9-02281251acc1
+		summarizeBy: sum
+		sourceColumn: CompressiveStrengthRounded_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CompressiveStrengthUnrounded_psi
+		dataType: double
+		lineageTag: f615a56d-9125-4758-a190-54d4b305712a
+		summarizeBy: sum
+		sourceColumn: CompressiveStrengthUnrounded_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActualCompressiveStrength_psi
+		dataType: double
+		lineageTag: abaccfd3-25b6-4f79-b6bb-49629193ecd8
+		summarizeBy: sum
+		sourceColumn: ActualCompressiveStrength_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HasCompressiveStrengthResult
+		dataType: int64
+		formatString: 0
+		lineageTag: 8207257c-3647-492c-99d4-1ffe78170ed5
+		summarizeBy: sum
+		sourceColumn: HasCompressiveStrengthResult
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrengthAtAge_psi
+		dataType: double
+		lineageTag: abbecc0d-6685-4602-80c1-4e90b4b88664
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAge_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RequiredStrengthAtAgeRowCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 2009eb18-442d-4def-966e-4b3337bedcfc
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAgeRowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column RequiredStrengthAtAgeDistinctValueCount
+		dataType: int64
+		formatString: 0
+		lineageTag: a15f9b00-e534-4d27-aa9f-33f46414c8ad
+		summarizeBy: sum
+		sourceColumn: RequiredStrengthAtAgeDistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrengthAtAge_psi
+		dataType: double
+		lineageTag: f5ed03d4-fab5-40fd-bb1c-728d1e90bdc5
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAge_psi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DesignStrengthAtAgeRowCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d15e141-814f-4cbc-9b6b-64488cf9985a
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAgeRowCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DesignStrengthAtAgeDistinctValueCount
+		dataType: int64
+		formatString: 0
+		lineageTag: fcff32f8-9e9a-46d6-b24f-1586eb573500
+		summarizeBy: sum
+		sourceColumn: DesignStrengthAtAgeDistinctValueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column FractureTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ca449e4-2b05-4bf1-9b3d-3eaec60c3432
+		summarizeBy: count
+		sourceColumn: FractureTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CapTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: a7336e1a-f225-4faf-a1d2-b970789f8d7d
+		summarizeBy: count
+		sourceColumn: CapTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TechnicianId
+		dataType: int64
+		formatString: 0
+		lineageTag: 93729350-ddba-41c4-ac05-1c9d410a4934
+		summarizeBy: count
+		sourceColumn: TechnicianId
+
+		annotation SummarizationSetBy = Automatic
+
+	column EquipmentName
+		dataType: string
+		lineageTag: 70ba8331-0870-4c01-b766-9aacac6e9e9a
+		summarizeBy: none
+		sourceColumn: EquipmentName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SampleWorkflowStateId
+		dataType: int64
+		formatString: 0
+		lineageTag: f3372fbd-8ca8-4971-bd07-0712e0194003
+		summarizeBy: count
+		sourceColumn: SampleWorkflowStateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmendmentNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a75e024d-65ca-4fe9-b433-9c2afdf3857c
+		summarizeBy: sum
+		sourceColumn: AmendmentNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecimenLastUpdatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f3deb34d-28bc-4b88-b0a7-f696059a6bf5
+		summarizeBy: none
+		sourceColumn: SpecimenLastUpdatedAt
+
+		variation Variation
+			isDefault
+			relationship: f687698d-137e-487f-8dd8-aff08ca68305
+			defaultHierarchy: LocalDateTable_f4166122-b1f8-4a44-853d-72773ec17503.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ConcreteSpecimenHistory = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\deoks\source\repos\imts-PowerBI\data\ConcreteSpecimenHistory.csv"),[Delimiter=",", Columns=36, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = let
+				    Source = #"Promoted Headers",
+				
+				    NormalizeMissing = Table.TransformColumns(
+				        Source,
+				        List.Transform(
+				            Table.ColumnNames(Source),
+				            (columnName) => {
+				                columnName,
+				                (value) =>
+				                    if value is text then
+				                        if Text.Trim(value) = ""
+				                            or Text.Upper(Text.Trim(value)) = "NULL"
+				                        then null
+				                        else value
+				                    else value
+				            }
+				        )
+				    ),
+				
+				    SetTypes = Table.TransformColumnTypes(
+				        NormalizeMissing,
+				        {
+				            {"SpecimenRowId", Int64.Type},
+				            {"SpecimenLabel", type text},
+				            {"ConcreteTestDataId", Int64.Type},
+				            {"TestId", Int64.Type},
+				            {"SampleId", Int64.Type},
+				            {"LabNo", type text},
+				
+				            {"TestSubTypeId", Int64.Type},
+				            {"ConcreteTestUnitSystem", Int64.Type},
+				
+				            {"CastDate", type date},
+				            {"BreakAgeDays", Int64.Type},
+				            {"ReceivedAt", type datetime},
+				            {"TestedAt", type datetime},
+				
+				            {"WasFieldCured", Int64.Type},
+				            {"CuringType", type text},
+				            {"CuringLocation", type text},
+				
+				            {"TestLoadRaw", type number},
+				            {"WidthOrDiameterRaw", type number},
+				            {"HeightOrLengthRaw", type number},
+				            {"CalculatedAreaRaw", type number},
+				
+				            {"CompressiveStrengthRounded_psi", type number},
+				            {"CompressiveStrengthUnrounded_psi", type number},
+				            {"ActualCompressiveStrength_psi", type number},
+				            {"HasCompressiveStrengthResult", Int64.Type},
+				
+				            {"RequiredStrengthAtAge_psi", type number},
+				            {"RequiredStrengthAtAgeRowCount", Int64.Type},
+				            {"RequiredStrengthAtAgeDistinctValueCount", Int64.Type},
+				
+				            {"DesignStrengthAtAge_psi", type number},
+				            {"DesignStrengthAtAgeRowCount", Int64.Type},
+				            {"DesignStrengthAtAgeDistinctValueCount", Int64.Type},
+				
+				            {"FractureTypeId", Int64.Type},
+				            {"CapTypeId", Int64.Type},
+				            {"TechnicianId", Int64.Type},
+				            {"EquipmentName", type text},
+				
+				            {"SampleWorkflowStateId", Int64.Type},
+				            {"AmendmentNumber", Int64.Type},
+				            {"SpecimenLastUpdatedAt", type datetime}
+				        },
+				        "en-US"
+				    )
+				in
+				    SetTypes
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
